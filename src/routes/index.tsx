@@ -4,7 +4,7 @@ import {
   Bar, BarChart, CartesianGrid, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
 import { ArrowDownRight, ArrowUpRight, PiggyBank, Wallet } from "lucide-react";
-import { transactions } from "@/lib/transactions";
+import { useTransactions } from "@/lib/tx-store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,6 +30,7 @@ const tip = {
 };
 
 function Index() {
+  const transactions = useTransactions();
   const d = useMemo(() => {
     const ing = transactions.filter((t) => t.tipo === "Ingreso").reduce((a, t) => a + t.monto, 0);
     const gas = transactions.filter((t) => t.tipo === "Gasto").reduce((a, t) => a + t.monto, 0);
@@ -49,7 +50,7 @@ function Index() {
       cats: [...cats.entries()].map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value),
       recent: [...transactions].sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 10),
     };
-  }, []);
+  }, [transactions]);
 
   const kpis = [
     { label: "Ingresos Totales", value: money(d.ing), icon: ArrowUpRight, tone: "text-success" },
