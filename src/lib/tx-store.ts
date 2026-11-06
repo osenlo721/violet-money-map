@@ -60,8 +60,8 @@ function parseAmount(s: string) {
 export function parseCsv(text: string): Tx[] {
   const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter((l) => l.trim());
   if (lines.length < 2) throw new Error("El archivo no tiene filas de datos.");
-  const sep = (lines[0].match(/;/g)?.length ?? 0) > (lines[0].match(/,/g)?.length ?? 0) ? ";" : ",";
-  const head = splitLine(lines[0], sep).map(norm);
+  const sep = (lines[0]!.match(/;/g)?.length ?? 0) > (lines[0]!.match(/,/g)?.length ?? 0) ? ";" : ",";
+  const head = splitLine(lines[0]!, sep).map(norm);
   const idx = (names: string[]) => head.findIndex((h) => names.includes(h));
   const col = {
     fecha: idx(["fecha"]), desc: idx(["descripcion"]), cat: idx(["categoria"]),
