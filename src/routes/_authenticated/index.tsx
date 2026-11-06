@@ -6,7 +6,7 @@ import {
 import { ArrowDownRight, ArrowUpRight, PiggyBank, Wallet } from "lucide-react";
 import { useTransactions } from "@/lib/tx-store";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/")({
   head: () => ({
     meta: [
       { title: "Control Financiero — Dashboard" },
