@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { CheckCircle2, UploadCloud, AlertCircle } from "lucide-react";
 import { parseCsv, setTransactions } from "@/lib/tx-store";
 
-export const Route = createFileRoute("/actualizar")({
+export const Route = createFileRoute("/_authenticated/actualizar")({
   head: () => ({
     meta: [
       { title: "Actualizar Datos — Control Financiero" },
