@@ -9,68 +9,68 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ActualizarRouteImport } from './routes/actualizar'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedActualizarRouteImport } from './routes/_authenticated/actualizar'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/_authenticated/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ActualizarRoute = ActualizarRouteImport.update({
-  id: '/actualizar',
+const AuthenticatedActualizarRoute = AuthenticatedActualizarRouteImport.update({
+  id: '/_authenticated/actualizar',
   path: '/actualizar',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/actualizar': typeof ActualizarRoute
+  '/actualizar': typeof AuthenticatedActualizarRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/actualizar': typeof ActualizarRoute
+  '/actualizar': typeof AuthenticatedActualizarRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/actualizar': typeof ActualizarRoute
+  '/_authenticated/actualizar': typeof AuthenticatedActualizarRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/actualizar'
+  fullPaths: '/actualizar' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/actualizar'
-  id: '__root__' | '/' | '/actualizar'
+  to: '/actualizar' | '/'
+  id: '__root__' | '/_authenticated/actualizar' | '/_authenticated/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ActualizarRoute: typeof ActualizarRoute
+  AuthenticatedActualizarRoute: typeof AuthenticatedActualizarRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/actualizar': {
-      id: '/actualizar'
+    '/_authenticated/actualizar': {
+      id: '/_authenticated/actualizar'
       path: '/actualizar'
       fullPath: '/actualizar'
-      preLoaderRoute: typeof ActualizarRouteImport
+      preLoaderRoute: typeof AuthenticatedActualizarRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ActualizarRoute: ActualizarRoute,
+  AuthenticatedActualizarRoute: AuthenticatedActualizarRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
